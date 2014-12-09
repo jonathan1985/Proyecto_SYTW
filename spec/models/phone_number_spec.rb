@@ -8,4 +8,7 @@ RSpec.describe PhoneNumber, :type => :model do
  it 'is associated with a person' do
   expect(phone_number).to respond_to(:person)
  end
+  it 'has a link to add a new phone number' do
+    expect(page).to have_link('Add phone number', href: new_phone_number_path)
+  end
 end

@@ -422,3 +422,160 @@ Completed 200 OK in 17ms (Views: 9.6ms | ActiveRecord: 0.3ms)
   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
   [1m[35m (0.1ms)[0m  BEGIN
   [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (3.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (120.0ms)[0m  DROP DATABASE IF EXISTS "my_database_test"
+  [1m[36m (411.3ms)[0m  [1mCREATE DATABASE "my_database_test" ENCODING = 'utf8'[0m
+  [1m[35mSQL (7.3ms)[0m  CREATE EXTENSION IF NOT EXISTS "plpgsql"
+  [1m[36m (31.3ms)[0m  [1mCREATE TABLE "people" ("id" serial primary key, "first_name" character varying(255), "last_name" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (2.8ms)[0m  CREATE TABLE "phone_numbers" ("id" serial primary key, "number" character varying(255), "person_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) [0m
+  [1m[35m (1.4ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36m (0.4ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (1.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20141204131534')
+  [1m[36m (0.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20141204115924')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.5ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.3ms)[0m  [1mINSERT INTO "phone_numbers" ("created_at", "number", "person_id", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", "2014-12-09 08:18:42.138636"], ["number", "MyString"], ["person_id", 1], ["updated_at", "2014-12-09 08:18:42.138636"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PhoneNumbersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mPhoneNumber Load (0.4ms)[0m  [1mSELECT  "phone_numbers".* FROM "phone_numbers"  WHERE "phone_numbers"."id" = $1 LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 13ms (Views: 10.8ms | ActiveRecord: 0.4ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Processing by PhoneNumbersController#new as HTML
+Completed 200 OK in 2ms (Views: 2.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "phone_numbers" ("created_at", "number", "person_id", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", "2014-12-09 08:18:42.168869"], ["number", "MyString"], ["person_id", 1], ["updated_at", "2014-12-09 08:18:42.168869"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PhoneNumbersController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mPhoneNumber Load (0.3ms)[0m  [1mSELECT  "phone_numbers".* FROM "phone_numbers"  WHERE "phone_numbers"."id" = $1 LIMIT 1[0m  [["id", 2]]
+Completed 200 OK in 3ms (Views: 1.7ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM "phone_numbers"
+Processing by PhoneNumbersController#create as HTML
+  Parameters: {"phone_number"=>{"number"=>"MyString", "person_id"=>"1"}}
+Completed 500 Internal Server Error in 1ms
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Processing by PhoneNumbersController#create as HTML
+  Parameters: {"phone_number"=>{"number"=>"MyString", "person_id"=>"1"}}
+Completed 500 Internal Server Error in 1ms
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "people" ("created_at", "first_name", "last_name", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", "2014-12-09 08:18:42.222317"], ["first_name", "Alice"], ["last_name", "Smith"], ["updated_at", "2014-12-09 08:18:42.222317"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PhoneNumbersController#create as HTML
+  Parameters: {"phone_number"=>{"number"=>"555-8888", "person_id"=>"1"}}
+Completed 500 Internal Server Error in 1ms
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Processing by PhoneNumbersController#create as HTML
+  Parameters: {"phone_number"=>{"number"=>nil, "person_id"=>nil}}
+Completed 500 Internal Server Error in 0ms
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Processing by PhoneNumbersController#create as HTML
+  Parameters: {"phone_number"=>{"number"=>nil, "person_id"=>nil}}
+Completed 500 Internal Server Error in 0ms
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "phone_numbers" ("created_at", "number", "person_id", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", "2014-12-09 08:18:42.232477"], ["number", "MyString"], ["person_id", 1], ["updated_at", "2014-12-09 08:18:42.232477"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PhoneNumbersController#update as HTML
+  Parameters: {"phone_number"=>{"number"=>"MyNewString", "person_id"=>"2"}, "id"=>"3"}
+  [1m[36mPhoneNumber Load (0.2ms)[0m  [1mSELECT  "phone_numbers".* FROM "phone_numbers"  WHERE "phone_numbers"."id" = $1 LIMIT 1[0m  [["id", 3]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mUPDATE "phone_numbers" SET "number" = $1, "person_id" = $2, "updated_at" = $3 WHERE "phone_numbers"."id" = 3[0m  [["number", "MyNewString"], ["person_id", 2], ["updated_at", "2014-12-09 08:18:42.235645"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/phone_numbers/3
+Completed 302 Found in 4ms (ActiveRecord: 0.7ms)
+  [1m[36mPhoneNumber Load (0.2ms)[0m  [1mSELECT  "phone_numbers".* FROM "phone_numbers"  WHERE "phone_numbers"."id" = $1 LIMIT 1[0m  [["id", 3]]
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "phone_numbers" ("created_at", "number", "person_id", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", "2014-12-09 08:18:42.240958"], ["number", "MyString"], ["person_id", 1], ["updated_at", "2014-12-09 08:18:42.240958"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PhoneNumbersController#update as HTML
+  Parameters: {"phone_number"=>{"number"=>"MyString", "person_id"=>"1"}, "id"=>"4"}
+  [1m[36mPhoneNumber Load (0.2ms)[0m  [1mSELECT  "phone_numbers".* FROM "phone_numbers"  WHERE "phone_numbers"."id" = $1 LIMIT 1[0m  [["id", 4]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/phone_numbers/4
+Completed 302 Found in 2ms (ActiveRecord: 0.4ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "phone_numbers" ("created_at", "number", "person_id", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", "2014-12-09 08:18:42.245982"], ["number", "MyString"], ["person_id", 1], ["updated_at", "2014-12-09 08:18:42.245982"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PhoneNumbersController#update as HTML
+  Parameters: {"phone_number"=>{"number"=>"MyString", "person_id"=>"1"}, "id"=>"5"}
+  [1m[36mPhoneNumber Load (0.2ms)[0m  [1mSELECT  "phone_numbers".* FROM "phone_numbers"  WHERE "phone_numbers"."id" = $1 LIMIT 1[0m  [["id", 5]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/phone_numbers/5
+Completed 302 Found in 2ms (ActiveRecord: 0.4ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "phone_numbers" ("created_at", "number", "person_id", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", "2014-12-09 08:18:42.251383"], ["number", "MyString"], ["person_id", 1], ["updated_at", "2014-12-09 08:18:42.251383"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PhoneNumbersController#update as HTML
+  Parameters: {"phone_number"=>{"number"=>nil, "person_id"=>nil}, "id"=>"6"}
+  [1m[36mPhoneNumber Load (0.1ms)[0m  [1mSELECT  "phone_numbers".* FROM "phone_numbers"  WHERE "phone_numbers"."id" = $1 LIMIT 1[0m  [["id", 6]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE "phone_numbers" SET "number" = $1, "person_id" = $2, "updated_at" = $3 WHERE "phone_numbers"."id" = 6[0m  [["number", nil], ["person_id", nil], ["updated_at", "2014-12-09 08:18:42.254137"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/phone_numbers/6
+Completed 302 Found in 2ms (ActiveRecord: 0.5ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "phone_numbers" ("created_at", "number", "person_id", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", "2014-12-09 08:18:42.257331"], ["number", "MyString"], ["person_id", 1], ["updated_at", "2014-12-09 08:18:42.257331"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PhoneNumbersController#update as HTML
+  Parameters: {"phone_number"=>{"number"=>nil, "person_id"=>nil}, "id"=>"7"}
+  [1m[35mPhoneNumber Load (0.1ms)[0m  SELECT  "phone_numbers".* FROM "phone_numbers"  WHERE "phone_numbers"."id" = $1 LIMIT 1  [["id", 7]]
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE "phone_numbers" SET "number" = $1, "person_id" = $2, "updated_at" = $3 WHERE "phone_numbers"."id" = 7  [["number", nil], ["person_id", nil], ["updated_at", "2014-12-09 08:18:42.260280"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/phone_numbers/7
+Completed 302 Found in 3ms (ActiveRecord: 0.5ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "phone_numbers" ("created_at", "number", "person_id", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", "2014-12-09 08:18:42.263587"], ["number", "MyString"], ["person_id", 1], ["updated_at", "2014-12-09 08:18:42.263587"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "phone_numbers"[0m
+Processing by PhoneNumbersController#destroy as HTML
+  Parameters: {"id"=>"8"}
+  [1m[35mPhoneNumber Load (0.1ms)[0m  SELECT  "phone_numbers".* FROM "phone_numbers"  WHERE "phone_numbers"."id" = $1 LIMIT 1  [["id", 8]]
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  DELETE FROM "phone_numbers" WHERE "phone_numbers"."id" = $1  [["id", 8]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/phone_numbers
+Completed 302 Found in 2ms (ActiveRecord: 0.5ms)
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "phone_numbers"
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "phone_numbers" ("created_at", "number", "person_id", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", "2014-12-09 08:18:42.270702"], ["number", "MyString"], ["person_id", 1], ["updated_at", "2014-12-09 08:18:42.270702"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PhoneNumbersController#destroy as HTML
+  Parameters: {"id"=>"9"}
+  [1m[35mPhoneNumber Load (0.1ms)[0m  SELECT  "phone_numbers".* FROM "phone_numbers"  WHERE "phone_numbers"."id" = $1 LIMIT 1  [["id", 9]]
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  DELETE FROM "phone_numbers" WHERE "phone_numbers"."id" = $1  [["id", 9]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/phone_numbers
+Completed 302 Found in 2ms (ActiveRecord: 0.5ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
